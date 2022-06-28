@@ -64,27 +64,11 @@ export async function signUpHandler(req: Request, res: Response) {
 
 export async function loginHandler(req: Request, res: Response) {
   try {
-    const { email, password, store: storeName } = req.body;
+    const { email, password } = req.body;
 
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email }, raw: true });
 
     if (!user) {
-      return res.status(401).json({
-        message: 'Email or password are wrong',
-        success: false,
-      });
-    }
-
-    const store = await Store.findOne({ where: { slug: storeName } });
-
-    if (!store) {
-      return res.status(401).json({
-        message: 'Store are wrong',
-        success: false,
-      });
-    }
-
-    if (store.userId !== user.id) {
       return res.status(401).json({
         message: 'Email or password are wrong',
         success: false,
@@ -100,12 +84,17 @@ export async function loginHandler(req: Request, res: Response) {
       });
     }
 
+    const store = await Store.findOne({
+      where: { userId: user.id },
+      raw: true,
+    });
+
     const userInfo = lodash.omit(user, userPrivate);
     const storeInfo = lodash.omit(store, storePrivate);
 
     const token = await signJwt({
       ...userInfo,
-      store: store.name,
+      store: store?.name,
     });
 
     res.status(200).json({

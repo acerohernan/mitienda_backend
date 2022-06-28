@@ -34,9 +34,6 @@ export const loginSchema = object({
     password: string({
       required_error: 'Password is required',
     }),
-    store: string({
-      required_error: 'Store name is required',
-    }),
   }),
 });
 
