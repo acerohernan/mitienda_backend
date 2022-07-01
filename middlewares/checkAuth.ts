@@ -1,4 +1,4 @@
-import { NextFunction, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { get } from 'lodash';
 import { verifyJwt } from '../utils/jwt';
 import logger from '../utils/logger';
