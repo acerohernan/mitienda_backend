@@ -22,9 +22,13 @@ export interface StoreAttibutes {
   address: string;
   type: string | null;
   keywords: string;
+  phone: string;
   color: string;
   logoUrl: string | null;
   bannerUrl: string | null;
+  facebook: string | null;
+  twitter: string | null;
+  instagram: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -87,6 +91,26 @@ export class Store extends Model<StoreAttibutes, StoreCreationAttributes> {
     type: DataType.STRING,
   })
   color: string;
+
+  @Column({
+    type: DataType.STRING,
+  })
+  phone: string;
+
+  @Column({
+    type: DataType.STRING,
+  })
+  facebook: string;
+
+  @Column({
+    type: DataType.STRING,
+  })
+  twitter: string;
+
+  @Column({
+    type: DataType.STRING,
+  })
+  instagram: string;
 
   @Column({
     type: DataType.STRING,

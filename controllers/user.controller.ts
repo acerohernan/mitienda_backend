@@ -13,7 +13,7 @@ import { storePrivate, userPrivate } from '../utils/privateFields';
 
 export async function signUpHandler(req: Request, res: Response) {
   try {
-    const { email, password, store, country } = req.body;
+    const { email, password, store, country, phone } = req.body;
     // Encrypt the password
     const encryptedPass = await hashString(password);
 
@@ -46,6 +46,7 @@ export async function signUpHandler(req: Request, res: Response) {
       country,
       slug: store,
       userId: user.id,
+      phone,
     });
 
     res.status(200).json({
@@ -94,7 +95,7 @@ export async function loginHandler(req: Request, res: Response) {
 
     const token = await signJwt({
       ...userInfo,
-      store: store?.name,
+      store: store?.slug,
     });
 
     res.status(200).json({

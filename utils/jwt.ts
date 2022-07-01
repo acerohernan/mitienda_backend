@@ -1,5 +1,6 @@
-import jwt from 'jsonwebtoken';
 import config from 'config';
+import jwt from 'jsonwebtoken';
+import logger from './logger';
 
 const privateKey = Buffer.from(
   config.get<string>('jwt.privateKey'),
@@ -10,7 +11,10 @@ const publicKey = Buffer.from(
   'base64'
 ).toString('ascii');
 
-export function signJwt(object: Record<string, any>, options?: jwt.SignOptions | undefined) {
+export function signJwt(
+  object: Record<string, any>,
+  options?: jwt.SignOptions | undefined
+) {
   return jwt.sign(object, privateKey, {
     ...(options && options),
     algorithm: 'RS256',
@@ -26,6 +30,7 @@ export function verifyJwt(token: string) {
       decoded,
     };
   } catch (e: any) {
+    logger.error(e);
     return {
       valid: false,
       expired: e.message === 'jwt expired',
