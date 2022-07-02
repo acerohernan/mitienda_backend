@@ -49,11 +49,6 @@ export async function updateInformationHandler(req: Request, res: Response) {
       },
     });
 
-    const store = await Store.findOne({
-      where: { userId: user.id },
-      raw: true,
-    });
-
     res.status(200).json({
       message: 'Success',
       success: true,
