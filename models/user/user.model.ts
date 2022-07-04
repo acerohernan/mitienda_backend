@@ -4,6 +4,7 @@ import {
   CreatedAt,
   DataType,
   Default,
+  Index,
   Model,
   Table,
   Unique,
@@ -27,6 +28,7 @@ export interface UserCreationAttributes extends Optional<UserAttibutes, 'id'> {}
   tableName: 'tbl_users',
 })
 export class User extends Model<UserAttibutes, UserCreationAttributes> {
+  @Index
   @Unique(true)
   @Column({
     type: DataType.STRING,
