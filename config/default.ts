@@ -23,7 +23,8 @@ export default {
     user: process.env.SMTP_USER,
     password: process.env.SMTP_PASSWORD,
   },
-  frontend: {
-    url: process.env.FRONTEND_URL,
+  url: {
+    frontend: process.env.FRONTEND_URL,
+    backend: process.env.BACKEND_URL,
   },
 };

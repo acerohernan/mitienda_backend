@@ -1,3 +1,4 @@
+import config from 'config';
 import { Request, Response } from 'express';
 import { Store } from '../models/store/store.model';
 import logger from '../utils/logger';
@@ -53,6 +54,32 @@ export async function updateInformationHandler(req: Request, res: Response) {
       message: 'Success',
       success: true,
       data: null,
+    });
+  } catch (e: any) {
+    logger.error(e.message);
+    res.status(500).json({
+      message: 'Server error',
+      success: false,
+    });
+  }
+}
+
+export async function uploadImageHandler(req: Request, res: Response) {
+  try {
+    if (!req.file)
+      return res.status(400).json({
+        message: 'Image not found',
+        success: false,
+      });
+
+    const url = `${
+      config.get('url.backend') || 'http://localhost:5000'
+    }/images/${req.file?.filename}`;
+
+    res.status(200).json({
+      message: 'Image upload successfully',
+      success: true,
+      data: url,
     });
   } catch (e: any) {
     logger.error(e.message);

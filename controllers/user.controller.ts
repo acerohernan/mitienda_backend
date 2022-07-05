@@ -174,7 +174,7 @@ export async function forgotPasswordHandler(req: Request, res: Response) {
         to: user?.email,
         subject: 'Recover password',
         html: `<p>This is the link to recover password ${config.get(
-          'frontend.url'
+          'url.frontend'
         )}/forgot-password/${verifyCode}</p>`,
       });
     }
