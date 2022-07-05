@@ -12,7 +12,7 @@ import { Store } from '../store/store.model';
 import { Category } from './category.model';
 
 export interface ProductAttibutes {
-  id: number;
+  id?: number;
   storeId: number;
   categoryId: number;
   name: string;
@@ -21,8 +21,8 @@ export interface ProductAttibutes {
   imgUrl?: string;
   price: string;
   top: boolean;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface ProductCreationAttributes

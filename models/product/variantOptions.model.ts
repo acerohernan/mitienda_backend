@@ -8,7 +8,7 @@ import {
 } from 'sequelize-typescript';
 import { ProductVariant } from './variant.model';
 
-export interface ProductVariantOptionsAttibutes {
+export interface ProductVariantOptionAttibutes {
   id: number;
   variantId: number;
   title: string;
@@ -16,15 +16,15 @@ export interface ProductVariantOptionsAttibutes {
   price: string;
 }
 
-export interface ProductVariantOptionsCreationAttributes
-  extends Optional<ProductVariantOptionsAttibutes, 'id'> {}
+export interface ProductVariantOptionCreationAttributes
+  extends Optional<ProductVariantOptionAttibutes, 'id'> {}
 
 @Table({
   tableName: 'tbl_products_variants_options',
 })
-export class ProductVariantOptions extends Model<
-  ProductVariantOptionsAttibutes,
-  ProductVariantOptionsCreationAttributes
+export class ProductVariantOption extends Model<
+  ProductVariantOptionAttibutes,
+  ProductVariantOptionCreationAttributes
 > {
   @ForeignKey(() => ProductVariant)
   @Column(DataType.INTEGER)

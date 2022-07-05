@@ -3,7 +3,7 @@ import { Sequelize } from 'sequelize-typescript';
 import { Category } from '../models/product/category.model';
 import { Product } from '../models/product/product.model';
 import { ProductVariant } from '../models/product/variant.model';
-import { ProductVariantOptions } from '../models/product/variantOptions.model';
+import { ProductVariantOption } from '../models/product/variantOptions.model';
 import { Store } from '../models/store/store.model';
 import { User } from '../models/user/user.model';
 
@@ -19,7 +19,7 @@ export const sequelize = new Sequelize({
     Category,
     Product,
     ProductVariant,
-    ProductVariantOptions,
+    ProductVariantOption,
   ],
   storage: ':memory:',
   logging: false,
