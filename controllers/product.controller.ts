@@ -1,5 +1,9 @@
 import { Request, Response } from 'express';
 import {
+  ICategoryWithProducts,
+  IProduct,
+} from '../interfaces/product.interface';
+import {
   Category,
   CategoryCreationAttributes,
 } from '../models/product/category.model';
@@ -17,6 +21,7 @@ import {
   ProductVariantOptionCreationAttributes,
 } from '../models/product/variantOptions.model';
 import { Store } from '../models/store/store.model';
+import { getFullProductById } from '../services/product.service';
 import logger from '../utils/logger';
 
 interface IVariantToSave extends ProductVariantCreationAttributes {
@@ -41,16 +46,55 @@ export async function getProductsHandler(req: Request, res: Response) {
       });
 
     //Variables
+    let allProductsByCategory: ICategoryWithProducts[] = [];
+    let categoriesDB;
     let productsDB;
 
-    //Search all products
-    productsDB = await Product.findAll({
+    //Search all categories
+    categoriesDB = await Category.findAll({
       where: {
         storeId: store?.id,
       },
+      raw: true,
     });
 
-    console.log(productsDB);
+    //Search the products for each category
+    for (let i = 0; i < categoriesDB.length; i++) {
+      let category = categoriesDB[i];
+      let allProducts: IProduct[] = [];
+
+      //Search all the products
+      productsDB = await Product.findAll({
+        where: {
+          categoryId: category.id,
+        },
+        raw: true,
+      });
+
+      for (let i = 0; i < productsDB.length; i++) {
+        const fullProduct = await getFullProductById(productsDB[i].id);
+
+        if (!fullProduct) return;
+
+        allProducts = [...allProducts, fullProduct];
+      }
+
+      //Get product's variants
+
+      allProductsByCategory = [
+        ...allProductsByCategory,
+        {
+          category: category.name,
+          products: allProducts,
+        },
+      ];
+    }
+
+    res.status(200).json({
+      message: 'All product obtained',
+      success: true,
+      data: allProductsByCategory,
+    });
   } catch (e: any) {
     logger.error(e.message);
     res.status(500).json({

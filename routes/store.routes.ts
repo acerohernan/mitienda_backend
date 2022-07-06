@@ -18,7 +18,7 @@ const storeRouter = express.Router();
 //GET
 storeRouter.get('/get-information', checkAuth, getInformationHandler);
 
-storeRouter.get('get-products', checkAuth, getProductsHandler);
+storeRouter.get('/get-all-products', checkAuth, getProductsHandler);
 
 storeRouter.get('/get-report');
 
