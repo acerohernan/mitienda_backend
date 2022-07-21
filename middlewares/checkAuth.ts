@@ -25,8 +25,8 @@ export default function checkAuth(
     next();
   } catch (e: any) {
     logger.error(e.message);
-    res.status(500).json({
-      message: 'Server error',
+    res.status(401).json({
+      message: 'Unathorized',
       success: false,
     });
   }

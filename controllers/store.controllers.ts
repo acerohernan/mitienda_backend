@@ -39,7 +39,7 @@ export async function updateInformationHandler(req: Request, res: Response) {
 
       if (isCreated) {
         return res.status(400).json({
-          message: 'Store name is taken',
+          message: 'La tienda ya existe, cambia el nombre de usuario',
         });
       }
     }
